@@ -1,4 +1,5 @@
 import json
+
 arquivo = "usuarios.json"
 def carregar():
     try:
@@ -12,7 +13,7 @@ def salvar(usuarios):
 
 def ver_all(usuario):
     for u in usuario:
-        print("usuarios:", u)
+        print(f'nome: {u["nome"]} | id: {u["id"]} ')
 
 def gerar_id(usuarios):
     if not usuarios:
@@ -22,7 +23,7 @@ def add_usuario(usuario):
     
     nome_novo = input("Nome: ")
     for n in usuario:
-        if nome_novo == n["nome"]:
+        if nome_novo.lower() == n["nome"].lower():
             print("Esse nome já foi cadastrado")
             return 
             
@@ -40,26 +41,25 @@ def alterar(usuario):
 
     usuario_encontrado = None
 
-    # 1 - procurar pelo id
+
     for u in usuario:
         if id_al == u["id"]:
             usuario_encontrado = u
             break
 
     if usuario_encontrado is None:
+        
         print("id não encontrado")
         return
 
-    # 2 - pedir novo nome
     nome_n = input("novo nome: ")
 
-    # 3 - verificar duplicado
     for u in usuario:
         if nome_n == u["nome"] and u["id"] != id_al:
             print("esse nome já está cadastrado")
             return
 
-    # 4 - alterar
+
     usuario_encontrado["nome"] = nome_n
     salvar(usuario)
     print("alterado com sucesso!")
